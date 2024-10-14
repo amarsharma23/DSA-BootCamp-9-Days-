@@ -1,51 +1,76 @@
-class Stack:
-    def __init__(self, size=10):
-        self.size = size
-        self.stack = []
-    
-    def push(self, value):
-        if len(self.stack) == self.size:
-            print("\nStack is Full!!! Insertion is not possible!!!")
-        else:
-            self.stack.append(value)
-            print("\nInsertion success!!!")
-    
-    def pop(self):
-        if not self.stack:
-            print("\nStack is Empty!!! Deletion is not possible!!!")
-        else:
-            removed_value = self.stack.pop()
-            print(f"\nDeleted : {removed_value}")
-    
-    def display(self):
-        if not self.stack:
-            print("\nStack is Empty!!!")
-        else:
-            print("\nStack elements are:")
-            for value in reversed(self.stack):
-                print(value)
+#include <stdio.h>
+#include <conio.h>
+#define MAXSIZE 10
 
-def main():
-    stack = Stack()
-    while True:
-        print("\n\n*** MENU ***")
-        print("1. Push")
-        print("2. Pop")
-        print("3. Display")
-        print("4. Exit")
-        choice = int(input("Enter your choice: "))
-        
-        if choice == 1:
-            value = int(input("Enter the value to be inserted: "))
-            stack.push(value)
-        elif choice == 2:
-            stack.pop()
-        elif choice == 3:
-            stack.display()
-        elif choice == 4:
-            break
-        else:
-            print("\nWrong selection!!! Try again!!!")
+int stack[MAXSIZE];
+int top = -1;
 
-if __name__ == "__main__":
-    main()
+void push();
+void pop();
+void display();
+
+int main() {
+    int choice;
+   // clrscr();  // Used for clearing the screen in some compilers, may not work on modern compilers
+    
+    do {
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    } while (choice != 4);
+
+    getch();
+    return 0;
+}
+
+void push() {
+    int n;
+    if (top == MAXSIZE - 1) {
+        printf("Stack overflow\n");
+    } else {
+        printf("Enter an element: ");
+        scanf("%d", &n);
+        top++;
+        stack[top] = n;
+        printf("Element pushed: %d\n", n);
+    }
+}
+
+void pop() {
+    if (top == -1) {
+        printf("Stack underflow\n");
+    } else {
+        printf("Element popped: %d\n", stack[top]);
+        top--;
+    }
+}
+
+void display() {
+    if (top == -1) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Stack elements are: \n");
+        for (int i = 0; i <= top; i++) {
+            printf("%d ", stack[i]);
+        }
+        printf("\n");
+    }
+}
+
